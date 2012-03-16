@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Development Projects Directory{% endblock %}
+{% block content %}
+
+<div class="column m">
+    <h3>Development Partners</h3>
+    <table class="partners">
+
+        <thead>
+            <tr>
+                <td>Partner</td>
+                <td>Projects</td>
+                <td>Sector</td>
+                <td>Industry(s)</td>
+                <td>Investment (USD)</td>
+            </tr>
+        </thead>
+
+        <tbody>
+           {% for partner in partners %}
+           <tr>
+                <td>{{ partner.name }}</td>
+                <td>{{ partner.projects.count }}</td>
+                <td>{{ partner.sector }}</td>
+                <td>{{ partner.industry }}</td>
+                <td>{{ partner }}</td>
+           </tr>
+           {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="column">
+    <h3>New Development Partners</h3>
+    <p>Add a new APDF Project Development Partner to the Partners database. Click on the button below to get started.</p>
+    <button class="forms">Add Partner</button>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Development Projects Directory{% endblock %}
+{% block content %}
+
+    <div class="column m">
+        <h3>Recipient Organizations</h3>
+        <table class="recipients">
+
+            <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>Projects</td>
+                    <td>Sector</td>
+                    <td>Industry</td>
+                    <td>Founded</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for recipient in recipients %}
+                <tr>
+                    <td>{{ recipient.name }}</td>
+                    <td>{{ recipient.projects.count }}</td>
+                    <td>{{ recipient.sector }}</td>
+                    <td>{{ recipient.industry }}</td>
+                    <td>{{ recipient.year_founded }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="column">
+        <h3>New Recipients</h3>
+        <p>Add a new APDF Recipient Organization to the Recipients database. Click on the button below to get started.</p>
+        <button class="forms">Add Recipient</button>
+    </div>
+
+{% endblock %}

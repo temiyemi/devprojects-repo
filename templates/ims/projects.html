@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Development Projects Directory{% endblock %}
+{% block content %}
+
+<div class="column l">
+    <h3>Projects</h3>
+    <table class="projects">
+
+        <thead>
+            <tr>
+                <td>Project</td>
+                <td>Partner</td>
+                <td>Recipient Institution</td>
+                <td>Sector</td>
+                <td>Industry</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.name }}</td>
+                <td>{{ project.partner }}</td>
+                <td>{{ project.recipient }}</td>
+                <td>{{ project.sector }}</td>
+                <td>{{ project.industry }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+<div class="column">
+    <h3>New Projects</h3>
+    <p>Add a new APDF project to the database. Click on the button below to get started.</p>
+    <button class="forms">Add Project</button>
+</div>
+
+
+{% endblock %}
