@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 
 #view:projects
 def projects(request):
-    projects = get_list_or_404(Project)
+    projects = Project.objects.all()
     return render_to_response('ims/projects.html', { 'projects': projects })
 
 #view:projects_by_sector
@@ -21,7 +21,7 @@ def project(request, id):
 
 #view:partners
 def partners(request):
-    partners = get_list_or_404(DevelopmentPartner)
+    partners = DevelopmentPartner.objects.all()
     return render_to_response('ims/partners.html', { 'partners': partners })
 
 #view:partner :partner_id
@@ -32,7 +32,7 @@ def partner(request, id):
 
 #view:recipients
 def recipients(request):
-    recipients = get_list_or_404(Recipient)
+    recipients = Recipient.objects.all()
     return render_to_response('ims/recipients.html',{ 'recipients': recipients })
 
 #view:recipient :recipient_id
@@ -45,4 +45,4 @@ def recipient(request, id):
 
 #view:index
 def index(request):
-    render_to_response('ims/index.html')
+    return render_to_response('ims/index.html')

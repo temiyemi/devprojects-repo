@@ -2,10 +2,10 @@
     <h1>Development Projects Directory</h1>
     <div class="toolbar">
         <nav>
-            <a href="">Home</a>
-            <a href="">Projects</a>
-            <a href="">Development Partners</a>
-            <a href="">Recipient Organizations</a>
+            <a href="{% url home_url %}">Home</a>
+            <a href="{% url projects_url %}">Projects</a>
+            <a href="{% url partners_url %}">Development Partners</a>
+            <a href="{% url recipients_url %}">Recipient Organizations</a>
         </nav>
         <form>
             <input type="text" name="search" />
