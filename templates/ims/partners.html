@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Development Projects Directory{% endblock %}
+{% block title %} | Development Partners{% endblock %}
 {% block content %}
-
+    {% load humanize %}
 <div class="column m">
     <h3>Development Partners</h3>
     <table class="partners">
@@ -10,21 +10,27 @@
             <tr>
                 <td>Partner</td>
                 <td>Projects</td>
-                <td>Sector</td>
-                <td>Industry(s)</td>
-                <td>Investment (USD)</td>
+                <td>Est. Investments, $</td>
             </tr>
         </thead>
 
         <tbody>
            {% for partner in partners %}
            <tr>
-                <td>{{ partner.name }}</td>
-                <td>{{ partner.projects.count }}</td>
-                <td>{{ partner.sector }}</td>
-                <td>{{ partner.industry }}</td>
-                <td>{{ partner }}</td>
+                <td><a href="{% url partner_url partner.id %}">{{ partner.name }}</a></td>
+                <td>{{ partner.project_set.count }}</td>
+                <td>
+                {% with partner.investment as investments %}
+                    {% if investments >= 1000000 %}
+                        {{ investments|intword }}
+                    {% else %}
+                        {{ investments|intcomma }}
+                    {% endif %}
+                {% endwith %}
+                </td>
            </tr>
+           {% empty %}
+               <tr class="empty">There are no Development Projects Partners</tr>
            {% endfor %}
         </tbody>
     </table>

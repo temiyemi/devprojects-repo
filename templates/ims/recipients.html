@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Development Projects Directory{% endblock %}
+{% block title %} | Recipient Institutions{% endblock %}
 {% block content %}
-
+    {% load humanize %}
     <div class="column m">
         <h3>Recipient Organizations</h3>
         <table class="recipients">
@@ -10,8 +10,7 @@
                 <tr>
                     <td>Name</td>
                     <td>Projects</td>
-                    <td>Sector</td>
-                    <td>Industry</td>
+                    <td>Est. $</td>
                     <td>Founded</td>
                 </tr>
             </thead>
@@ -19,12 +18,21 @@
             <tbody>
                 {% for recipient in recipients %}
                 <tr>
-                    <td>{{ recipient.name }}</td>
-                    <td>{{ recipient.projects.count }}</td>
-                    <td>{{ recipient.sector }}</td>
-                    <td>{{ recipient.industry }}</td>
+                    <td><a href="{% url recipient_url recipient.id %}">{{ recipient.name }}</a></td>
+                    <td>{{ recipient.project_set.count }}</td>
+                    <td>
+                        {% with recipient.investment as investments %}
+                            {% if investments >= 1000000 %}
+                                {{ investments|intword }}
+                            {% else %}
+                                {{ investments|intcomma }}
+                            {% endif %}
+                        {% endwith %}
+                    </td>
                     <td>{{ recipient.year_founded }}</td>
                 </tr>
+                {% empty %}
+                    <tr class="empty">There are no Development Project Recipient Institutions</tr>
                 {% endfor %}
             </tbody>
         </table>

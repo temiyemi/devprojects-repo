@@ -2,14 +2,17 @@
     <h1>Development Projects Directory</h1>
     <div class="toolbar">
         <nav>
-            <a href="{% url home_url %}">Home</a>
-            <a href="{% url projects_url %}">Projects</a>
-            <a href="{% url partners_url %}">Development Partners</a>
-            <a href="{% url recipients_url %}">Recipient Organizations</a>
+            <a href="{% url home_url %}"
+                    {% ifequal 'index' nav %} class="current" {% endifequal %} >Home</a>
+
+            <a href="{% url projects_url %}"
+                    {% ifequal 'projects' nav %} class="current" {% endifequal %} >Projects</a>
+
+            <a href="{% url partners_url %}"
+                    {% ifequal 'partners' nav %} class="current" {% endifequal %} >Development Partners</a>
+
+            <a href="{% url recipients_url %}"
+                    {% ifequal 'recipients' nav %} class="current" {% endifequal %} >Recipient Organizations</a>
         </nav>
-        <form>
-            <input type="text" name="search" />
-            <button>Search</button>
-        </form>
     </div>
 </header>

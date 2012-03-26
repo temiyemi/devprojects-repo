@@ -1,30 +1,93 @@
 {% extends 'base.html' %}
-{% block title %}Development Projects Directory{% endblock %}
+{% block title %} | Projects{% endblock %}
 {% block content %}
-
+    {% load humanize ims_extras %}
 <div class="column l">
-    <h3>Projects</h3>
-    <table class="projects">
+    {% autoescape off %}
+        <script type="text/javascript">
+            var projects = jQuery.parseJSON('{{ projects.select_related|jsonify }}');
+        </script>
+    {% endautoescape %}
 
+    <form class="filters">
+        <h4>Show Projects by</h4>
+
+        <fieldset>
+            <label>Industry</label>
+            {% datalist 'industry' %}
+        </fieldset>
+
+        <fieldset>
+            <label>Status</label>
+            {% datalist 'status' %}
+        </fieldset>
+
+        <fieldset>
+            <label>Sector</label>
+            {% datalist 'sector' %}
+        </fieldset>
+
+        <fieldset>
+            <label>Year Started</label>
+            {% operatorlist 'eval_year' %}
+            {% datalist 'year' %}
+        </fieldset>
+
+        <fieldset>
+            <label>Duration</label>
+            {% operatorlist 'eval_duration' %}
+            {% datalist 'duration' %}
+        </fieldset>
+
+        <fieldset>
+            <label>Project Value, $</label>
+            {% operatorlist 'eval_cost' %}
+            {% datalist 'cost' %}
+        </fieldset>
+
+        <button>Filter</button>
+        <button type="reset">Clear Filters</button>
+    </form>
+
+    <h2>Showing all Development Projects</h2>
+
+    <table class="projects">
         <thead>
             <tr>
-                <td>Project</td>
+                <td>Project Name</td>
                 <td>Partner</td>
-                <td>Recipient Institution</td>
+                <td>Recipient</td>
                 <td>Sector</td>
                 <td>Industry</td>
+                <td>Value, $</td>
+                <td>Year</td>
+                <td hidden>Status</td>
+                <td hidden>Duration</td>
             </tr>
         </thead>
 
         <tbody>
             {% for project in projects %}
             <tr>
-                <td>{{ project.name }}</td>
-                <td>{{ project.partner }}</td>
-                <td>{{ project.recipient }}</td>
-                <td>{{ project.sector }}</td>
-                <td>{{ project.industry }}</td>
+                <td><a href="{% url project_url project.id %}">{{ project.name }}</a></td>
+                <td>{{ project.partner.acronym }}</td>
+                <td>{{ project.recipient.acronym }}</td>
+                <td role="sector">{{ project.sector }}</td>
+                <td role="industry">{{ project.industry }}</td>
+                {% with project.projectdetail.total_cost as cost %}
+                    {% if cost >= 1000000 %}
+                        <td>{{ cost|intword }}</td>
+                    {% else %}
+                        <td>{{ cost|intcomma }}</td>
+                    {% endif %}
+                    <td role="cost" hidden>{{ cost }}</td>
+                {% endwith %}
+                <td role="year">{{ project.projectdetail.commencement_year }}</td>
+                <td role="status" hidden>{{ project.projectdetail.current_status }}</td>
+                <td role="duration" hidden>{{ project.projectdetail.duration }}</td>
             </tr>
+            {% empty %}
+                <tr class="empty">There are no Development Projects</tr>
             {% endfor %}
         </tbody>
 
@@ -36,6 +99,5 @@
     <p>Add a new APDF project to the database. Click on the button below to get started.</p>
     <button class="forms">Add Project</button>
 </div>
-
 
 {% endblock %}
