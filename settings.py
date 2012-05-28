@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'devprojects.ims',
     'south',
+    'chartit',
 )
 
 # A sample logging configuration. The only tangible logging

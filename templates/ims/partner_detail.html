@@ -3,5 +3,73 @@
 {% block content %}
     {% load humanize %}
 
+    <div class="column datasheet">
+        <h3>Quick Fact Sheet</h3>
+
+        <p><strong>Projects: </strong> {{ partner.project_set.count|apnumber|capfirst }}</p>
+        {% with partner.investment as invest %}
+        <p>
+            <strong>Average Investments:</strong> USD
+                {% if invest.average > 1000000 %}
+                    {{ invest.average|intword }}
+                {% else %}
+                    {{ invest.average|intcomma }}
+                {% endif %}
+        </p>
+        <p>
+            <strong>Total Investments:</strong> USD
+                {% if invest.total > 1000000 %}
+                    {{ invest.total|intword }}
+                {% else %}
+                    {{ invest.total|intcomma }}
+                {% endif %}
+        </p>
+        {% endwith %}
+        <p><strong>Development Policy:</strong><br />  {{ partner.development_policy }}</p>
+        <p><strong>Website:</strong> {{ partner.website }}</p>
+    </div>
+
+    <div class="column m">
+        <h1>{{ partner.name }} ({{ partner.acronym }})</h1>
+
+
+        <h3>Projects sponsored by {{ partner.acronym }}</h3>
+        <table>
+            <thead>
+                <tr>
+                    <td>Project Name</td>
+                    <td>Recipient</td>
+                    <td>Sector/Industry</td>
+                    <td>Value, USD</td>
+                    <td>Year</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for project in partner.project_set.all %}
+                <tr>
+                    <td><a href="{% url project_url project.id %}">{{ project.name }}</a></td>
+                    <td><a href="{% url recipient_url project.recipient_id %}">{{ project.recipient.acronym }}</a></td>
+                    <td>{{ project.sector }}/{{ project.industry }}</td>
+                    <td>
+                        {% with project.projectdetail.total_cost as cost %}
+                            {% if cost > 1000000 %}
+                                {{ cost|intword }}
+                            {% else %}
+                                {{ cost|intcomma }}
+                            {% endif %}
+                        {% endwith %}
+                    </td>
+                    <td>{{ project.projectdetail.commencement_year }}</td>
+                    <td>{{ project.projectdetail.current_status }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+
 
 {% endblock %}

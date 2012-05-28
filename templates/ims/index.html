@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} | Home{% endblock %}
 {% block content %}
-
+    {% load chartit %}
+    {{ charts|load_charts:"charts" }}
+    <div class="column m" id="charts"></div>
 {% endblock %}

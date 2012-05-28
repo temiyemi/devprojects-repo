@@ -1,0 +1,20 @@
+You're doing fine.
+
+You need to install:
+
+pip
+django charit 
+south
+
+Then I don't think there should be problems from here on.
+
+To access the Admin interface, go to localhost:9000/admin
+
+Login in using "developer" and "password"
+
+See that "docs" folder for some vital documentation files.
+Read on Django on django website, then I can explain things to you later.
+
+CAREFUL NOTE: 
+BE CAREFUL WHAT YOU DO ON YOUR PC IN THIS DIRECTORY. DON'T ALTER OR DELETE ANY OF THE FILES I SENT TO YOU VIA DROPBOX, IF YOU DO, THEY ARE ALSO DELETED FROM MY PC INSTANTLY. AND I AM NOT MAKING BACK-UPS AS I DONT HAVE SPACE ON MY COMPUTER.
+

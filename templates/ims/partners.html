@@ -10,7 +10,8 @@
             <tr>
                 <td>Partner</td>
                 <td>Projects</td>
-                <td>Est. Investments, $</td>
+                <td>Average Investments, USD</td>
+                <td>Total Investments, USD</td>
             </tr>
         </thead>
 
@@ -19,15 +20,22 @@
            <tr>
                 <td><a href="{% url partner_url partner.id %}">{{ partner.name }}</a></td>
                 <td>{{ partner.project_set.count }}</td>
-                <td>
                 {% with partner.investment as investments %}
-                    {% if investments >= 1000000 %}
-                        {{ investments|intword }}
+                <td>
+                    {% if investments.average >= 1000000 %}
+                        {{ investments.average|intword }}
                     {% else %}
-                        {{ investments|intcomma }}
+                        {{ investments.average|intcomma }}
                     {% endif %}
-                {% endwith %}
                 </td>
+                <td>
+                    {% if investments.total >= 1000000 %}
+                        {{ investments.total|intword }}
+                    {% else %}
+                        {{ investments.total|intcomma }}
+                    {% endif %}
+                </td>
+                {% endwith %}
            </tr>
            {% empty %}
                <tr class="empty">There are no Development Projects Partners</tr>
@@ -37,8 +45,6 @@
 </div>
 
 <div class="column">
-    <h3>New Development Partners</h3>
-    <p>Add a new APDF Project Development Partner to the Partners database. Click on the button below to get started.</p>
-    <button class="forms">Add Partner</button>
+
 </div>
 {% endblock %}

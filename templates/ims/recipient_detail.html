@@ -3,5 +3,81 @@
 {% block content %}
     {% load humanize %}
 
+    <div class="column datasheet">
+        <h3>Quick Fact Sheet</h3>
+
+        <p><strong>Founded in</strong> {{ recipient.year_founded }}</p>
+        <p><strong>Legal Status</strong>{{ recipient.legal_status }}</p>
+
+        <p><strong>Projects: </strong> {{ recipient.project_set.count|apnumber|capfirst }}</p>
+        {% with recipient.investment as invest %}
+            <p>
+                <strong>Average Funding Received:</strong> USD
+                {% if invest.average > 1000000 %}
+                    {{ invest.average|intword }}
+                {% else %}
+                    {{ invest.average|intcomma }}
+                {% endif %}
+            </p>
+            <p>
+                <strong>Total Funding Received:</strong> USD
+                {% if invest.total > 1000000 %}
+                    {{ invest.total|intword }}
+                {% else %}
+                    {{ invest.total|intcomma }}
+                {% endif %}
+            </p>
+        {% endwith %}
+        <p><b>Development Policy:</b><br />  {{ recipient.development_policy }}</p>
+
+        <h3>Contact Info</h3>
+        <p><strong>Contact Person</strong> {{ recipient.contact_person }}</p>
+        <p><b>Office Address</b> <br/> {{ recipient.office_address }}</p>
+        <p><strong>Telephone</strong> {{ recipient.telephone }}</p>
+        <p><strong>Email</strong> {{ recipient.email }}</p>
+        <p><strong>Website:</strong> {{ recipient.website }}</p>
+    </div>
+
+    <div class="column m">
+        <h1>{{ recipient.name }} ({{ recipient.acronym }})</h1>
+        <h3>Projects of {{ recipient.acronym }}</h3>
+        <table class="projects">
+            <thead>
+                <tr>
+                    <td>Project Name</td>
+                    <td>Development Partner</td>
+                    <td>Sector/Industry</td>
+                    <td>Value, USD</td>
+                    <td>Year</td>
+                    <td>Status</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for project in recipient.project_set.all %}
+                    <tr>
+                        <td><a href="{% url project_url project.id %}">{{ project.name }}</a></td>
+                        <td><a href="{% url partner_url project.partner_id %}">{{ project.partner.acronym }}</a></td>
+                        <td>{{ project.sector }}/{{ project.industry }}</td>
+                        <td>
+                            {% with project.projectdetail.total_cost as cost %}
+                                {% if cost > 1000000 %}
+                                    {{ cost|intword }}
+                                {% else %}
+                                    {{ cost|intcomma }}
+                                {% endif %}
+                            {% endwith %}
+                        </td>
+                        <td>{{ project.projectdetail.commencement_year }}</td>
+                        <td>{{ project.projectdetail.current_status }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+
+    </div>
+
 
 {% endblock %}

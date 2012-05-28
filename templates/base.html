@@ -33,12 +33,13 @@
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
   <script src="{{ static_url }}js/libs/modernizr-2.0.6.min.js"></script>
 
+  {% load chartit %}
+
 </head>
 <body>
   <div id="container">
     {% include '_header.html' %}
     <div id="main" role="main">
-        {{ get_script_prefix }}
     	{% block content %}{% endblock %}
     </div>
     {% include '_footer.html' %}

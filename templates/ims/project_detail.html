@@ -1,7 +1,75 @@
 {% extends 'base.html' %}
 {% block title %} | {{ project.name }}{% endblock %}
 {% block content %}
+    {% load humanize %}
+
+    <div class="column datasheet">
+        <h3>Quick Fact Sheet</h3>
+        <p><strong>Status: </strong>{{ project.projectdetail.current_status }}</p>
+        <p><strong>Sector: </strong>{{ project.sector }}</p>
+        <p><strong>Industry: </strong>{{ project.industry }}</p>
+        <p><strong>Total Cost: </strong>USD
+            {% with project.projectdetail.total_cost as cost %}
+                {% if cost > 1000000 %}
+                    {{ cost|intword }}
+                {% else %}
+                    {{ cost|intcomma }}
+                {% endif %}
+            {% endwith %}
+        </p>
+        <p><strong>Duration: </strong>{{ project.projectdetail.duration }}</p>
+        <p><strong>Year: </strong>{{ project.projectdetail.commencement_year }}</p>
+    </div>
+
+    <div class="column m projects">
+        <h1>{{ project.name }}</h1>
+        <h3>Development Partner:
+            <a href="{% url partner_url project.partner_id %}">{{ project.partner }} ({{ project.partner.acronym }})</a>
+        </h3>
+        <h3>Recipient Organization:
+            <a href="{% url recipient_url project.recipient_id %}">{{ project.recipient }} ({{ project.recipient.acronym }})</a>
+        </h3>
 
 
 
+
+        <h2>Project Objectives</h2>
+
+        <h4>Objectives</h4>
+        <p>{{ project.projectdetail.objectives }}</p>
+
+        <h4>Goals</h4>
+        <p>{{ project.projectdetail.goals }}</p>
+
+        <h4>Target Beneficiaries</h4>
+        <p>{{ project.projectdetail.target_beneficiaries }}</p>
+
+        <h4>Expected Outcomes</h4>
+        <p>{{ project.projectdetail.outcomes }}</p>
+
+
+
+
+        <h2>Other Details</h2>
+
+        <h4>Sources of Funding</h4>
+        <p>{{ project.projectdetail.sources_of_funding }}</p>
+
+        <h4>Project Management Structure</h4>
+        <p>{{ project.projectdetail.pm_structure }}</p>
+
+        <h4>Key Implementing Stakeholders</h4>
+        <p>{{ project.projectdetail.key_implementing_stakeholders }}</p>
+        
+        <h4>Collaborators</h4>
+        <p>{{ project.projectdetail.collaborators }}</p>
+
+        <h4>Level of Project Implementation</h4>
+        <p>{{ project.projectdetail.implementation_level }}</p>
+
+        <h4>Coverage Areas</h4>
+        <p>{{ project.projectdetail.coverage_areas }}</p>
+
+
+    </div>
 {% endblock %}
